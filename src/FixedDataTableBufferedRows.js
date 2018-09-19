@@ -13,12 +13,15 @@
 import FixedDataTableRow from 'FixedDataTableRow';
 import PropTypes from 'prop-types';
 import React from 'React';
+import createReactClass from 'create-react-class';
 import cx from 'cx';
 import emptyFunction from 'emptyFunction';
 import joinClasses from 'joinClasses';
 
-class FixedDataTableBufferedRows extends React.Component {
-  static propTypes = {
+var FixedDataTableBufferedRows = createReactClass({
+  displayName: 'FixedDataTableBufferedRows',
+
+  propTypes: {
     isScrolling: PropTypes.bool,
     fixedColumns: PropTypes.array.isRequired,
     height: PropTypes.number.isRequired,
@@ -46,25 +49,25 @@ class FixedDataTableBufferedRows extends React.Component {
     scrollableColumns: PropTypes.array.isRequired,
     showLastRowBorder: PropTypes.bool,
     width: PropTypes.number.isRequired,
-  }
+  },
 
   componentWillMount() {
     this._staticRowArray = [];
     this._initialRender = true;
-  }
+  },
 
   componentDidMount() {
     this._initialRender = false;
-  }
+  },
 
   shouldComponentUpdate() /*boolean*/ {
     // Don't add PureRenderMixin to this component please.
     return true;
-  }
+  },
 
   componentWillUnmount() {
     this._staticRowArray.length = 0;
-  }
+  },
 
   render() /*object*/ {
     var props = this.props;
@@ -132,7 +135,7 @@ class FixedDataTableBufferedRows extends React.Component {
     }
 
     return <div>{this._staticRowArray}</div>;
-  }
-};
+  },
+});
 
 module.exports = FixedDataTableBufferedRows;

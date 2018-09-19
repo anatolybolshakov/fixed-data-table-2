@@ -17,7 +17,9 @@ import FixedDataTableBufferedRows from 'FixedDataTableBufferedRows';
 import FixedDataTableColumnResizeHandle from 'FixedDataTableColumnResizeHandle';
 import FixedDataTableRow from 'FixedDataTableRow';
 import React from 'React';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
+import ReactComponentWithPureRenderMixin from 'ReactComponentWithPureRenderMixin';
 import ReactTouchHandler from 'ReactTouchHandler';
 import ReactWheelHandler from 'ReactWheelHandler';
 import Scrollbar from 'Scrollbar';
@@ -74,8 +76,10 @@ import tableHeightsSelector from 'tableHeights';
  * - Scrollable Body Columns: The body columns that move while scrolling
  *   vertically or horizontally.
  */
-class FixedDataTable extends React.Component {
-  static propTypes = {
+const FixedDataTable = createReactClass({
+  displayName: 'FixedDataTable',
+
+  propTypes: {
 
     // TODO (jordan) Remove propType of width without losing documentation (moved to tableSize)
     /**
@@ -188,30 +192,30 @@ class FixedDataTable extends React.Component {
      */
     subRowHeightGetter: PropTypes.func,
 
-    /**
-     * The row expanded for table row.
-     * This can either be a React element, or a function that generates
-     * a React Element. By default, the React element passed in can expect to
-     * receive the following props:
-     *
-     * ```
-     * props: {
-     *   rowIndex; number // (the row index)
-     *   height: number // (supplied from subRowHeight or subRowHeightGetter)
-     *   width: number // (supplied from the Table)
-     * }
-     * ```
-     *
-     * Because you are passing in your own React element, you can feel free to
-     * pass in whatever props you may want or need.
-     *
-     * If you pass in a function, you will receive the same props object as the
-     * first argument.
-     */
-    rowExpanded: PropTypes.oneOfType([
-      PropTypes.element,
-      PropTypes.func,
-    ]),
+   /**
+    * The row expanded for table row.
+    * This can either be a React element, or a function that generates
+    * a React Element. By default, the React element passed in can expect to
+    * receive the following props:
+    *
+    * ```
+    * props: {
+    *   rowIndex; number // (the row index)
+    *   height: number // (supplied from subRowHeight or subRowHeightGetter)
+    *   width: number // (supplied from the Table)
+    * }
+    * ```
+    *
+    * Because you are passing in your own React element, you can feel free to
+    * pass in whatever props you may want or need.
+    *
+    * If you pass in a function, you will receive the same props object as the
+    * first argument.
+    */
+   rowExpanded: PropTypes.oneOfType([
+     PropTypes.element,
+     PropTypes.func,
+   ]),
 
     /**
      * To get any additional CSS classes that should be added to a row,
@@ -360,17 +364,19 @@ class FixedDataTable extends React.Component {
      * half of the number of visible rows.
      */
     bufferRowCount: PropTypes.number,
-  }
+  },
 
-  static defaultProps = /*object*/ {
-    elementHeights: {
-      footerHeight: 0,
-      groupHeaderHeight: 0,
-      headerHeight: 0,
-    },
-    touchScrollEnabled: false,
-    stopScrollPropagation: false,
-  }
+  getDefaultProps() /*object*/ {
+    return {
+      elementHeights: {
+        footerHeight: 0,
+        groupHeaderHeight: 0,
+        headerHeight: 0,
+      },
+      touchScrollEnabled: false,
+      stopScrollPropagation: false
+    };
+  },
 
   componentWillMount() {
     this._didScrollStop = debounceCore(this._didScrollStop, 200, this);
@@ -388,20 +394,22 @@ class FixedDataTable extends React.Component {
       this._shouldHandleTouchY,
       this.props.stopScrollPropagation
     );
-  }
+  },
 
   componentWillUnmount() {
     this._wheelHandler = null;
     this._touchHandler = null;
-  }
+  },
 
-  _shouldHandleTouchX = (/*number*/ delta) /*boolean*/ =>
-    this.props.touchScrollEnabled && this._shouldHandleWheelX(delta)
+  _shouldHandleTouchX(/*number*/ delta) /*boolean*/ {
+    return this.props.touchScrollEnabled && this._shouldHandleWheelX(delta);
+  },
 
-  _shouldHandleTouchY = (/*number*/ delta) /*boolean*/ =>
-    this.props.touchScrollEnabled && this._shouldHandleWheelY(delta)
+  _shouldHandleTouchY(/*number*/ delta) /*boolean*/ {
+    return this.props.touchScrollEnabled && this._shouldHandleWheelY(delta);
+  },
 
-  _shouldHandleWheelX = (/*number*/ delta) /*boolean*/ => {
+  _shouldHandleWheelX(/*number*/ delta) /*boolean*/ {
     const { maxScrollX, scrollFlags, scrollX } = this.props;
     const { overflowX } = scrollFlags;
 
@@ -418,9 +426,9 @@ class FixedDataTable extends React.Component {
       (delta < 0 && scrollX > 0) ||
       (delta >= 0 && scrollX < maxScrollX)
     );
-  }
+  },
 
-  _shouldHandleWheelY = (/*number*/ delta) /*boolean*/ => {
+  _shouldHandleWheelY(/*number*/ delta) /*boolean*/ {
     const { maxScrollY, scrollFlags, scrollY } = this.props;
     const { overflowY } = scrollFlags;
 
@@ -437,9 +445,9 @@ class FixedDataTable extends React.Component {
       (delta < 0 && scrollY > 0) ||
       (delta >= 0 && scrollY < maxScrollY)
     );
-  }
+  },
 
-  _reportContentHeight = () => {
+  _reportContentHeight() {
     const { contentHeight } = tableHeightsSelector(this.props);
     const { onContentHeightChange } = this.props;
 
@@ -447,26 +455,26 @@ class FixedDataTable extends React.Component {
       onContentHeightChange(contentHeight);
     }
     this._contentHeight = contentHeight;
-  }
+  },
 
   componentDidMount() {
     this._reportContentHeight();
-  }
+  },
 
   componentWillReceiveProps(/*object*/ nextProps) {
 
     // In the case of controlled scrolling, notify.
     if (this.props.tableSize.ownerHeight !== nextProps.tableSize.ownerHeight ||
-      this.props.scrollTop !== nextProps.scrollTop ||
-      this.props.scrollLeft !== nextProps.scrollLeft) {
+        this.props.scrollTop !== nextProps.scrollTop ||
+        this.props.scrollLeft !== nextProps.scrollLeft) {
       this._didScrollStart();
     }
     this._didScrollStop();
-  }
+  },
 
   componentDidUpdate() {
     this._reportContentHeight();
-  }
+  },
 
   render() /*object*/ {
     const {
@@ -683,10 +691,10 @@ class FixedDataTable extends React.Component {
         {scrollbarX}
       </div>
     );
-  }
+  },
 
-  _renderRows = (/*number*/ offsetTop, fixedCellTemplates, scrollableCellTemplates,
-    bodyHeight) /*object*/ => {
+  _renderRows(/*number*/ offsetTop, fixedCellTemplates, scrollableCellTemplates,
+      bodyHeight) /*object*/ {
     const props = this.props;
     return (
       <FixedDataTableBufferedRows
@@ -712,14 +720,14 @@ class FixedDataTable extends React.Component {
         rowHeights={props.rowHeights}
       />
     );
-  }
+  },
 
   /**
    * This is called when a cell that is in the header of a column has its
    * resizer knob clicked on. It displays the resizer and puts in the correct
    * location on the table.
    */
-  _onColumnResize = (
+  _onColumnResize(
     /*number*/ combinedWidth,
     /*number*/ leftOffset,
     /*number*/ cellWidth,
@@ -727,7 +735,7 @@ class FixedDataTable extends React.Component {
     /*?number*/ cellMaxWidth,
     /*number|string*/ columnKey,
     /*object*/ event
-  ) => {
+  ) {
     let clientX = event.clientX;
     let clientY = event.clientY;
     this.props.columnActions.resizeColumn({
@@ -740,27 +748,22 @@ class FixedDataTable extends React.Component {
       clientY,
       leftOffset
     });
-  }
+  },
 
-  _onColumnReorder = (
-    /*string*/ columnKey,
-    /*number*/ width,
-    /*number*/ left,
-    /*object*/ event,
-  ) => {
+  _onColumnReorder(/*string*/ columnKey, /*number*/ width, /*number*/ left, /*object*/ event) {
     this.props.columnActions.startColumnReorder({
       scrollStart: this.props.scrollX,
       columnKey,
       width,
       left
     });
-  }
+  },
 
-  _onColumnReorderMove = (/*number*/ deltaX) => {
+  _onColumnReorderMove(/*number*/ deltaX) {
     this.props.columnActions.moveColumnReorder(deltaX);
-  }
+  },
 
-  _onColumnReorderEnd = (/*object*/ props, /*object*/ event) => {
+  _onColumnReorderEnd(/*object*/ props, /*object*/ event) {
     const {
       columnActions,
       columnReorderingData: {
@@ -789,9 +792,9 @@ class FixedDataTable extends React.Component {
     if (scrollStart !== scrollX && onHorizontalScroll) {
       onHorizontalScroll(scrollX)
     };
-  }
+  },
 
-  _onScroll = (/*number*/ deltaX, /*number*/ deltaY) => {
+  _onScroll(/*number*/ deltaX, /*number*/ deltaY) {
     const {
       maxScrollX,
       maxScrollY,
@@ -830,9 +833,9 @@ class FixedDataTable extends React.Component {
     }
 
     this._didScrollStop();
-  }
+  },
 
-  _onHorizontalScroll = (/*number*/ scrollPos) => {
+  _onHorizontalScroll(/*number*/ scrollPos) {
     const {
       onHorizontalScroll,
       scrollActions,
@@ -851,9 +854,9 @@ class FixedDataTable extends React.Component {
       scrollActions.scrollToX(scrollPos);
     }
     this._didScrollStop();
-  }
+  },
 
-  _onVerticalScroll = (/*number*/ scrollPos) => {
+  _onVerticalScroll(/*number*/ scrollPos) {
     const {
       onVerticalScroll,
       scrollActions,
@@ -873,9 +876,9 @@ class FixedDataTable extends React.Component {
     }
 
     this._didScrollStop();
-  }
+  },
 
-  _didScrollStart = () => {
+  _didScrollStart() {
     const {
       firstRowIndex,
       onScrollStart,
@@ -894,9 +897,9 @@ class FixedDataTable extends React.Component {
     if (onScrollStart) {
       onScrollStart(scrollX, scrollY, firstRowIndex);
     }
-  }
+  },
 
-  _didScrollStop = () => {
+  _didScrollStop() {
     const {
       firstRowIndex,
       onScrollEnd,
@@ -915,25 +918,28 @@ class FixedDataTable extends React.Component {
     if (onScrollEnd) {
       onScrollEnd(scrollX, scrollY, firstRowIndex);
     }
-  }
-};
+  },
+});
 
-class HorizontalScrollbar extends React.PureComponent {
-  static propTypes = {
+const HorizontalScrollbar = createReactClass({
+  displayName: 'HorizontalScrollbar',
+  mixins: [ReactComponentWithPureRenderMixin],
+
+  propTypes: {
     contentSize: PropTypes.number.isRequired,
     offset: PropTypes.number.isRequired,
     onScroll: PropTypes.func.isRequired,
     position: PropTypes.number.isRequired,
     size: PropTypes.number.isRequired,
-  }
+  },
 
   componentWillMount() {
     this._initialRender = true;
-  }
+  },
 
   componentDidMount() {
     this._initialRender = false;
-  }
+  },
 
   render() /*object*/ {
     const {
@@ -968,7 +974,7 @@ class HorizontalScrollbar extends React.PureComponent {
         </div>
       </div>
     );
-  }
-};
+  },
+});
 
 module.exports = FixedDataTable;
