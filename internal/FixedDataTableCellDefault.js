@@ -84,16 +84,24 @@ var FixedDataTableCellDefault = function (_React$Component) {
           children = _props.children,
           columnKey = _props.columnKey,
           rowIndex = _props.rowIndex,
-          props = _objectWithoutProperties(_props, ['height', 'width', 'style', 'className', 'children', 'columnKey', 'rowIndex']);
+          role = _props.role,
+          ariaChecked = _props.ariaChecked,
+          props = _objectWithoutProperties(_props, ['height', 'width', 'style', 'className', 'children', 'columnKey', 'rowIndex', 'role', 'ariaChecked']);
 
       var innerStyle = _extends({
         height: height,
         width: width
       }, style);
 
+      var ariaProps = {
+        "aria-checked": ariaChecked
+      };
+
       return _React2.default.createElement(
         'div',
-        _extends({}, props, {
+        _extends({
+          role: role
+        }, ariaProps, props, {
           className: (0, _joinClasses2.default)((0, _cx2.default)('fixedDataTableCellLayout/wrap1'), (0, _cx2.default)('public/fixedDataTableCell/wrap1'), className),
           style: innerStyle }),
         _React2.default.createElement(

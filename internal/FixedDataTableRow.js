@@ -193,6 +193,7 @@ var FixedDataTableRowImpl = function (_React$Component) {
           onMouseDown: this.props.onMouseDown ? this._onMouseDown : null,
           onMouseEnter: this.props.onMouseEnter ? this._onMouseEnter : null,
           onMouseLeave: this.props.onMouseLeave ? this._onMouseLeave : null,
+          role: 'row',
           style: style },
         _React2.default.createElement(
           'div',
