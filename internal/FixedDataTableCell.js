@@ -310,20 +310,19 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
       );
     }
 
-    var role = void 0;
-    if (props.role) {
-      role = props.role;
-    } else if (props.onColumnReorder) {
-      role = "columnheader";
-    } else {
-      role = "gridcell";
-    }
-
+    /* let role;
+     if (props.role) {
+       role = props.role;
+     } else if (props.onColumnReorder) {
+       role = "columnheader";
+     } else {
+       role = "gridcell";
+     }*/
+    // role={role}
     return _React2.default.createElement(
       'div',
       { className: className,
-        style: style,
-        role: role },
+        style: style },
       columnResizerComponent,
       columnReorderComponent,
       content

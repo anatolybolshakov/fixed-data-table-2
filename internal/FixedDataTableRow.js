@@ -193,7 +193,6 @@ var FixedDataTableRowImpl = function (_React$Component) {
           onMouseDown: this.props.onMouseDown ? this._onMouseDown : null,
           onMouseEnter: this.props.onMouseEnter ? this._onMouseEnter : null,
           onMouseLeave: this.props.onMouseLeave ? this._onMouseLeave : null,
-          role: 'row',
           style: style },
         _React2.default.createElement(
           'div',
@@ -346,6 +345,7 @@ var FixedDataTableRow = function (_React$Component2) {
       return _React2.default.createElement(
         'div',
         {
+          role: 'row',
           style: style,
           className: (0, _cx2.default)('fixedDataTableRowLayout/rowWrapper') },
         _React2.default.createElement(FixedDataTableRowImpl, _extends({}, this.props, {

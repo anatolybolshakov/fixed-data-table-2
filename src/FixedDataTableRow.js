@@ -199,7 +199,6 @@ class FixedDataTableRowImpl extends React.Component {
         onMouseDown={this.props.onMouseDown ? this._onMouseDown : null}
         onMouseEnter={this.props.onMouseEnter ? this._onMouseEnter : null}
         onMouseLeave={this.props.onMouseLeave ? this._onMouseLeave : null}
-        role="row"
         style={style}>
         <div className={cx('fixedDataTableRowLayout/body')}>
           {fixedColumns}
@@ -330,6 +329,7 @@ class FixedDataTableRow extends React.Component {
 
     return (
       <div
+        role="row"
         style={style}
         className={cx('fixedDataTableRowLayout/rowWrapper')}>
         <FixedDataTableRowImpl

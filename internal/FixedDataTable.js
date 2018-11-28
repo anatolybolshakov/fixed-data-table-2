@@ -666,8 +666,8 @@ var FixedDataTable = (0, _createReactClass2.default)({
 
     var ariaProps = {
       // Considering only scrollable columns since we use only one fixed column for marks
-      "aria-colcount": this.props.fixedColumns.cells.length,
-      "aria-rowcount": this.rowsCount
+      "aria-colcount": scrollableColumns.cell.length,
+      "aria-rowcount": this.props.rowsCount
     };
 
     return _React2.default.createElement(
