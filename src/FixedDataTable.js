@@ -657,8 +657,15 @@ const FixedDataTable = createReactClass({
         />;
     }
 
+    let ariaProps = {
+      // Considering only scrollable columns since we use only one fixed column for marks
+      "aria-colcount": this.props.fixedColumns.cells.length,
+      "aria-rowcount": this.rowsCount,
+    }
+
     return (
       <div
+        role="grid"
         className={joinClasses(
           className,
           cx('fixedDataTableLayout/main'),

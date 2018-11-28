@@ -329,6 +329,7 @@ class FixedDataTableRow extends React.Component {
 
     return (
       <div
+        row="row"
         style={style}
         className={cx('fixedDataTableRowLayout/rowWrapper')}>
         <FixedDataTableRowImpl

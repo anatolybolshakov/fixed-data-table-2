@@ -345,6 +345,7 @@ var FixedDataTableRow = function (_React$Component2) {
       return _React2.default.createElement(
         'div',
         {
+          row: 'row',
           style: style,
           className: (0, _cx2.default)('fixedDataTableRowLayout/rowWrapper') },
         _React2.default.createElement(FixedDataTableRowImpl, _extends({}, this.props, {

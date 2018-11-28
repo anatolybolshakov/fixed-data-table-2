@@ -664,9 +664,16 @@ var FixedDataTable = (0, _createReactClass2.default)({
       });
     }
 
+    var ariaProps = {
+      // Considering only scrollable columns since we use only one fixed column for marks
+      "aria-colcount": this.props.fixedColumns.cells.length,
+      "aria-rowcount": this.rowsCount
+    };
+
     return _React2.default.createElement(
       'div',
       {
+        role: 'grid',
         className: (0, _joinClasses2.default)(className, (0, _cx2.default)('fixedDataTableLayout/main'), (0, _cx2.default)('public/fixedDataTable/main')),
         onWheel: this._wheelHandler.onWheel,
         onTouchStart: this._touchHandler.onTouchStart,
