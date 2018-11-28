@@ -664,12 +664,12 @@ var FixedDataTable = (0, _createReactClass2.default)({
       });
     }
 
-    var ariaProps = {
+    /*let ariaProps = {
       // Considering only scrollable columns since we use only one fixed column for marks
       "aria-colcount": this.props.fixedColumns.cells.length,
-      "aria-rowcount": this.rowsCount
-    };
-
+      "aria-rowcount": this.rowsCount,
+    }
+    */
     return _React2.default.createElement(
       'div',
       {
