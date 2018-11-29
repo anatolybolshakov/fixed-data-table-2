@@ -193,6 +193,7 @@ class FixedDataTableRowImpl extends React.Component {
 
     return (
       <div
+        role="presentation"
         className={joinClasses(className, this.props.className)}
         onClick={this.props.onClick ? this._onClick : null}
         onDoubleClick={this.props.onDoubleClick ? this._onDoubleClick : null}

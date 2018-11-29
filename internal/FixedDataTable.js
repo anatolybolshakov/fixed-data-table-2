@@ -664,15 +664,9 @@ var FixedDataTable = (0, _createReactClass2.default)({
       });
     }
 
-    var ariaProps = {
-      // Considering only scrollable columns since we use only one fixed column for marks
-      "aria-colcount": scrollableColumns.cell.length,
-      "aria-rowcount": this.props.rowsCount
-    };
-
     return _React2.default.createElement(
       'div',
-      _extends({
+      {
         className: (0, _joinClasses2.default)(className, (0, _cx2.default)('fixedDataTableLayout/main'), (0, _cx2.default)('public/fixedDataTable/main')),
         onWheel: this._wheelHandler.onWheel,
         onTouchStart: this._touchHandler.onTouchStart,
@@ -680,11 +674,13 @@ var FixedDataTable = (0, _createReactClass2.default)({
         onTouchMove: this._touchHandler.onTouchMove,
         onTouchCancel: this._touchHandler.onTouchCancel,
         role: 'grid'
-      }, ariaProps, {
+        // Considering only scrollable columns since we use only one fixed column for marks
+        , 'aria-colcount': scrollableColumns.cell.length,
+        'aria-rowcount': this.props.rowsCount,
         style: {
           height: componentHeight,
           width: width
-        } }),
+        } },
       _React2.default.createElement(
         'div',
         {

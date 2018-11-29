@@ -187,6 +187,7 @@ var FixedDataTableRowImpl = function (_React$Component) {
       return _React2.default.createElement(
         'div',
         {
+          role: 'presentation',
           className: (0, _joinClasses2.default)(className, this.props.className),
           onClick: this.props.onClick ? this._onClick : null,
           onDoubleClick: this.props.onDoubleClick ? this._onDoubleClick : null,

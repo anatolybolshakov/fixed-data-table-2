@@ -292,15 +292,6 @@ var FixedDataTableCell = createReactClass({
       );
     }
 
-   /* let role;
-    if (props.role) {
-      role = props.role;
-    } else if (props.onColumnReorder) {
-      role = "columnheader";
-    } else {
-      role = "gridcell";
-    }*/
-// role={role}
     return (
       <div className={className}
         style={style}>
