@@ -85,7 +85,8 @@ var FixedDataTableCellDefault = function (_React$Component) {
           columnKey = _props.columnKey,
           role = _props.role,
           rowIndex = _props.rowIndex,
-          props = _objectWithoutProperties(_props, ['height', 'width', 'style', 'className', 'children', 'columnKey', 'role', 'rowIndex']);
+          ariaChecked = _props.ariaChecked,
+          props = _objectWithoutProperties(_props, ['height', 'width', 'style', 'className', 'children', 'columnKey', 'role', 'rowIndex', 'ariaChecked']);
 
       var innerStyle = _extends({
         height: height,
@@ -109,7 +110,8 @@ var FixedDataTableCellDefault = function (_React$Component) {
               'div',
               { className: (0, _cx2.default)('public/fixedDataTableCell/cellContent'),
                 role: role,
-                'aria-rowindex': rowIndex },
+                'aria-rowindex': rowIndex + 1,
+                'aria-checked': ariaChecked },
               children
             )
           )

@@ -293,8 +293,7 @@ var FixedDataTableCell = createReactClass({
     }
 
     return (
-      <div className={className}
-        style={style}>
+      <div className={className} style={style}>
         {columnResizerComponent}
         {columnReorderComponent}
         {content}

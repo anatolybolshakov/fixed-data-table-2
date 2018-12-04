@@ -483,7 +483,7 @@ const FixedDataTable = createReactClass({
       scrollableColumnGroups,
       scrollableColumns,
     } = columnTemplatesSelector(this.props);
-  
+
     const {
       bodyHeight,
       bodyOffsetTop,

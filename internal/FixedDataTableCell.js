@@ -312,8 +312,7 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
 
     return _React2.default.createElement(
       'div',
-      { className: className,
-        style: style },
+      { className: className, style: style },
       columnResizerComponent,
       columnReorderComponent,
       content
