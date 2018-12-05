@@ -669,6 +669,10 @@ const FixedDataTable = createReactClass({
         onTouchEnd={this._touchHandler.onTouchEnd}
         onTouchMove={this._touchHandler.onTouchMove}
         onTouchCancel={this._touchHandler.onTouchCancel}
+        role = "grid"
+        // Considering only scrollable columns since we use only one fixed column for marks
+        aria-colcount = {scrollableColumns.cell.length}
+        aria-rowcount = {this.props.rowsCount}
         style={{
           height: componentHeight,
           width
