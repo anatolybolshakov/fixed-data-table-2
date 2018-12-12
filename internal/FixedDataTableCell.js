@@ -319,7 +319,7 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
     );
   },
   _onColumnResizerMouseDown: function _onColumnResizerMouseDown( /*object*/event) {
-    this.props.onColumnResize(this.props.left, this.props.width, this.props.minWidth, this.props.maxWidth, this.props.columnKey, event);
+    this.props.onColumnResize(document.dir !== "rtl" ? this.props.left : this.props.columnGroupWidth - this.props.left, this.props.width, this.props.minWidth, this.props.maxWidth, this.props.columnKey, event);
   },
   _onColumnReorderMouseDown: function _onColumnReorderMouseDown( /*object*/event) {
     this.props.onColumnReorder(this.props.columnKey, this.props.width, this.props.left, event);

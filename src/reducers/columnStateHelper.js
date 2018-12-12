@@ -129,10 +129,16 @@ function resizeColumn(state, resizeData) {
     clientY,
     leftOffset
   } = resizeData;
+
+  let leftCoord = leftOffset + combinedWidth - cellWidth;
+  /*if (document.dir !== "rtl") {
+    leftCoord += combinedWidth;
+  }*/
+
   return Object.assign({}, state, {
     isColumnResizing: true,
     columnResizingData: {
-      left: leftOffset + combinedWidth - cellWidth,
+      left: leftCoord,
       width: cellWidth,
       minWidth: cellMinWidth,
       maxWidth: cellMaxWidth,

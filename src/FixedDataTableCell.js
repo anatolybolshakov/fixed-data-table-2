@@ -303,7 +303,7 @@ var FixedDataTableCell = createReactClass({
 
   _onColumnResizerMouseDown(/*object*/ event) {
     this.props.onColumnResize(
-      this.props.left,
+      (document.dir !== "rtl") ? this.props.left : this.props.columnGroupWidth - this.props.left,
       this.props.width,
       this.props.minWidth,
       this.props.maxWidth,

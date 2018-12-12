@@ -239,7 +239,7 @@ var FixedDataTableCellGroup = (0, _createReactClass2.default)({
   /*?number*/maxWidth,
   /*string|number*/columnKey,
   /*object*/event) {
-    this.props.onColumnResize && this.props.onColumnResize(this.props.offsetLeft, left - this.props.left + width, width, minWidth, maxWidth, columnKey, event);
+    this.props.onColumnResize && this.props.onColumnResize(this.props.offsetLeft, document.dir !== "rtl" ? left - this.props.left + width : left - this.props.left, width, minWidth, maxWidth, columnKey, event);
   }
 });
 

@@ -239,7 +239,7 @@ var FixedDataTableCellGroup = createReactClass({
   ) {
     this.props.onColumnResize && this.props.onColumnResize(
       this.props.offsetLeft,
-      left - this.props.left + width,
+      (document.dir !== "rtl") ? left - this.props.left + width : left - this.props.left,
       width,
       minWidth,
       maxWidth,
