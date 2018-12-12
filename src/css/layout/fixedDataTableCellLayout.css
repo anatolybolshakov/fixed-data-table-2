@@ -16,7 +16,8 @@
   box-sizing: border-box;
   display: block;
   overflow: hidden;
-  position: absolute;
+  position: relative;
+  left: 0 !important;
   white-space: normal;
 }
 
