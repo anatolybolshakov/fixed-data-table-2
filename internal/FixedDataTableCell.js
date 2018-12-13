@@ -161,28 +161,46 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
 
     if (props.isColumnReordering) {
       var originalLeft = props.columnReorderingData.originalLeft;
-      var reorderCellLeft = originalLeft + props.columnReorderingData.dragDistance;
-      var farthestPossiblePoint = props.columnGroupWidth - props.columnReorderingData.columnWidth;
+      var reorderCellLeft, farthestPossiblePoint, nearestPossiblePoint;
+
+      if (document.dir !== "rtl") {
+        reorderCellLeft = originalLeft + props.columnReorderingData.dragDistance;
+        farthestPossiblePoint = props.columnGroupWidth - props.columnReorderingData.columnWidth;
+        nearestPossiblePoint = 0;
+      } else {
+        reorderCellLeft = originalLeft - props.columnReorderingData.dragDistance;
+        farthestPossiblePoint = 0;
+        nearestPossiblePoint = props.columnReorderingData.columnWidth;
+      }
 
       // ensure the cell isn't being dragged out of the column group
-      reorderCellLeft = Math.max(reorderCellLeft, 0);
+      reorderCellLeft = Math.max(reorderCellLeft, nearestPossiblePoint);
       reorderCellLeft = Math.min(reorderCellLeft, farthestPossiblePoint);
 
       if (props.columnKey === props.columnReorderingData.columnKey) {
         newState.displacement = reorderCellLeft - props.left;
         newState.isReorderingThisColumn = true;
       } else {
-        var reorderCellRight = reorderCellLeft + props.columnReorderingData.columnWidth;
-        var reorderCellCenter = reorderCellLeft + props.columnReorderingData.columnWidth / 2;
-        var centerOfThisColumn = left + props.width / 2;
+        var reorderCellRight, reorderCellCenter, centerOfThisColumn;
+        if (document.dir !== "rtl") {
+          reorderCellRight = reorderCellLeft + props.columnReorderingData.columnWidth;
+          reorderCellCenter = reorderCellLeft + props.columnReorderingData.columnWidth / 2;
+          centerOfThisColumn = left + props.width / 2;
+        } else {
+          reorderCellRight = reorderCellLeft;
+          reorderCellCenter = reorderCellLeft - props.columnReorderingData.columnWidth / 2;
+          centerOfThisColumn = left - props.width / 2;
+        }
 
-        var cellIsBeforeOneBeingDragged = reorderCellCenter > centerOfThisColumn;
-        var cellWasOriginallyBeforeOneBeingDragged = originalLeft > props.left;
+        var cellIsBeforeOneBeingDragged = document.dir !== "rtl" ? reorderCellCenter > centerOfThisColumn : reorderCellCenter < centerOfThisColumn;
+
+        var cellWasOriginallyBeforeOneBeingDragged = document.dir !== "rtl" ? originalLeft > props.left : originalLeft < props.left;
+
         var changedPosition = false;
 
         var dragPoint, thisCellPoint;
         if (cellIsBeforeOneBeingDragged) {
-          if (reorderCellLeft < centerOfThisColumn) {
+          if (reorderCellLeft < centerOfThisColumn && document.dir !== "rtl" || reorderCellLeft > centerOfThisColumn && document.dir === "rtl") {
             changedPosition = true;
             if (cellWasOriginallyBeforeOneBeingDragged) {
               newState.displacement = props.columnReorderingData.columnWidth;
@@ -191,7 +209,7 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
             }
           }
         } else {
-          if (reorderCellRight > centerOfThisColumn) {
+          if (reorderCellRight > centerOfThisColumn && document.dir !== "rtl" || reorderCellRight < centerOfThisColumn && document.dir === "rtl") {
             changedPosition = true;
             if (cellWasOriginallyBeforeOneBeingDragged) {
               newState.displacement = 0;
@@ -322,7 +340,8 @@ var FixedDataTableCell = (0, _createReactClass2.default)({
     this.props.onColumnResize(document.dir !== "rtl" ? this.props.left : this.props.columnGroupWidth - this.props.left, this.props.width, this.props.minWidth, this.props.maxWidth, this.props.columnKey, event);
   },
   _onColumnReorderMouseDown: function _onColumnReorderMouseDown( /*object*/event) {
-    this.props.onColumnReorder(this.props.columnKey, this.props.width, this.props.left, event);
+    this.props.onColumnReorder(this.props.columnKey, this.props.width, this.props.left, //(document.dir !== "rtl") ? this.props.left : this.props.columnGroupWidth - this.props.left,
+    event);
   }
 });
 
