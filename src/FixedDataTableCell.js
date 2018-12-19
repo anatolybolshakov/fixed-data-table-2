@@ -131,16 +131,23 @@ var FixedDataTableCell = createReactClass({
     };
 
     if (props.isColumnReordering) {
-      var originalLeft = props.columnReorderingData.originalLeft;
-      var reorderCellLeft = originalLeft + props.columnReorderingData.dragDistance;
-      var farthestPossiblePoint = props.columnGroupWidth - props.columnReorderingData.columnWidth;
+      var originalLeft, reorderCellLeft, farthestPossiblePoint;
+      if (document.dir !== "rtl") {
+        originalLeft = props.columnReorderingData.originalLeft;
+        reorderCellLeft = originalLeft + props.columnReorderingData.dragDistance;
+        farthestPossiblePoint = props.columnGroupWidth - props.columnReorderingData.columnWidth;
+      } else {
+        originalLeft = props.columnReorderingData.originalLeft;
+        reorderCellLeft = originalLeft - props.columnReorderingData.dragDistance;
+        farthestPossiblePoint = props.columnGroupWidth - props.columnReorderingData.columnWidth;
+      }
 
       // ensure the cell isn't being dragged out of the column group
       reorderCellLeft = Math.max(reorderCellLeft, 0);
       reorderCellLeft = Math.min(reorderCellLeft, farthestPossiblePoint);
 
       if (props.columnKey === props.columnReorderingData.columnKey) {
-        newState.displacement = reorderCellLeft - props.left;
+        newState.displacement = originalLeft + props.columnReorderingData.dragDistance - props.left;
         newState.isReorderingThisColumn = true;
 
       } else {
