@@ -148,9 +148,6 @@ function resizeColumn(state, resizeData) {
 
 
   var leftCoord = leftOffset + combinedWidth - cellWidth;
-  /*if (document.dir !== "rtl") {
-    leftCoord += combinedWidth;
-  }*/
 
   return _extends({}, state, {
     isColumnResizing: true,
